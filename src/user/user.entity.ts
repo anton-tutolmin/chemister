@@ -1,4 +1,4 @@
-import { List } from "src/list/list.entity";
+import { Lists } from "src/list/list.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -15,8 +15,8 @@ export class Users {
   @Column()
   password: string;
 
-  @OneToMany(() => List, list => list.user)
-  lists: List[];
+  @OneToMany(() => Lists, list => list.user)
+  lists: Lists[];
 
   @Column({
     nullable: false,
