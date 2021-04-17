@@ -1,6 +1,7 @@
-import { Body, Controller, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { GetUser } from "src/user/user.decorators";
+import { UserOwnerGuard } from "src/user/user.guard";
 import { AddElementsDto, CreateListDto, RemoveElementsDto } from "./list.dto";
 import { Lists } from "./list.entity";
 import { ListOwnerGuard } from "./list.guard";
@@ -12,6 +13,12 @@ export class ListsController {
   constructor(
     private readonly listService: ListsService
   ) {}
+
+  @Get('user/:userId')
+  @UseGuards(UserOwnerGuard)
+  getByUser(@Param('userId') userId) {
+    return this.listService.findByUserId(userId);
+  }
 
   @Post()
   create(@GetUser() user, @Body() body: CreateListDto) {
