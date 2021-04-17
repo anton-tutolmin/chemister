@@ -23,4 +23,9 @@ export class Users {
     default: false,
   })
   authorize: boolean;
+
+  @Column({
+    nullable: true
+  })
+  avatarUrl: string;
 }

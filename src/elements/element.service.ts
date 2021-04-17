@@ -13,4 +13,8 @@ export class ElementService {
       element => numbers.includes(element.number)
     );
   }
+
+  findElement(elementNumber: number) {
+    return this.elementList.find(element => element.number === elementNumber);
+  }
 }

@@ -1,16 +1,22 @@
-import { Body, Controller, Param, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { AddElementsDto, RemoveElementsDto } from "./list.dto";
+import { GetUser } from "src/user/user.decorators";
+import { AddElementsDto, CreateListDto, RemoveElementsDto } from "./list.dto";
 import { Lists } from "./list.entity";
 import { ListOwnerGuard } from "./list.guard";
 import { ListsService } from "./list.service";
 
-@Controller('list')
 @UseGuards(AuthGuard('jwt'))
+@Controller('list')
 export class ListsController {
   constructor(
     private readonly listService: ListsService
   ) {}
+
+  @Post()
+  create(@GetUser() user, @Body() body: CreateListDto) {
+    return this.listService.create(user.id, body);
+  }
 
   @Put(':id/add_elements')
   @UseGuards(ListOwnerGuard)

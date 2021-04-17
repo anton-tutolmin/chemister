@@ -1,7 +1,15 @@
-import { IsNumber } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { ExistsElement } from "./list.decorator";
+
+export class CreateListDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+}
 
 export class AddElementsDto {
   @IsNumber({}, { each: true })
+  @ExistsElement()
   elements: number[];
 }
 

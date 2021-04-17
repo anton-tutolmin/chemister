@@ -1,4 +1,4 @@
-import { BadRequestException, CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { ListsService } from "./list.service";
 
 @Injectable()
@@ -17,7 +17,7 @@ export class ListOwnerGuard implements CanActivate {
     if (!list) {
       throw new BadRequestException('List not exists.');
     }
-    
-    return list.userId !== user.id;
+
+    return list.userId === user.id;
   }
 }
